@@ -15,6 +15,10 @@ ecommerceApp.config(['$routeProvider',
 				templateUrl: 	'vitrine.html',
 				controller:	'vitrineController'	
 			}).
+			when('/loja/add/:idProduto',{
+				templateUrl: 	'vitrine.html',
+				controller:	'adicionaItemController'	
+			}).
 			otherwise({
 				redirectTo: 	'/loja'
 			});

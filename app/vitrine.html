@@ -1,4 +1,4 @@
-<div style='position:relative;'>
+<!--div style='position:relative;'>
 	Ordenar por:
 	<select ng-model='ordem'>
 		<option value='fabricante'>Fabricante</option>			
@@ -7,8 +7,8 @@
 
 	</select> - 
 	Procurar na Vitrine: <input type='text' ng-model='query'>
-</div>
-<div class="vitrine" ng-init="eventos.loadVitrine();">
+</div-->
+<div class="vitrine" >
 	<!--produto-->
 	<div class="column" ng-repeat="item in myData|filter:query|orderBy:ordem">
 		<img class="mostruario" src="{{item.caminho_foto}}" alt="" />
@@ -23,9 +23,10 @@
 			<div class="valor_produto">
 				<span ng-bind-html="item.valor_produto"></span>			
 			</div>
+		
 			<div class="buy">			
 				
-				 <a href="#" ng-click="eventos.addCart(item)">COMPRAR</a>
+				 <a href="#/loja/add/{{item.idProduto}}">Comprar</a>
 				
 		 	</div>
 			<div class="clearfix"></div>			
