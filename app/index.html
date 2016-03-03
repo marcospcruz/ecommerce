@@ -6,20 +6,13 @@
   <link href="css/my_style.css" rel='stylesheet' type='text/css' />
   <script src="js/jquery/jquery-1.12.0.js"></script>
 
-  <script src="../bower_components/angular/angular.js"></script>
-  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="js/angular/angular.js"></script>
+  <script src="js/angular/angular-route.js"></script>
+  <script src="js/angular/angular-sanitize.js"></script>
   <script src="js/app.js"></script>
   <script src="js/controller.js"></script>
 </head>
 <body ng-controller="ecommerceLayoutCntrl">
-
-
-  <ul>
-    <li ng-repeat="phone in phones">
-      <span>{{phone.name}}</span>
-      <p>{{phone.snippet}}</p>
-    </li>
-  </ul>
 
 <div class="geral">
 			<!--HEADER-->
@@ -51,34 +44,28 @@
 			</div>
 			<!--fim HEADER-->
 			<!--conteudo-->
+			
 			<div class="content">
 			   <!-- Menu Horizontal -->
-				<div class="menu_vertical_esquerda">
-					<ul ng-repeat="categoriaProdutos in categoriasProdutos">
+				<div class="menu_vertical_esquerda" >
+					<ul ng-repeat="categoriaProdutos in myData">
 						<h4>{{categoriaProdutos.descricao}}</h4>
 					
-						<li><a href="#rota">descricao_tipo_produto</a></li>
+						<li ng-repeat="tipoProduto in categoriaProdutos.tipos_produtos"><a href="#/loja/{{tipoProduto.idTipoProduto}}">{{tipoProduto.descricao}}</a></li>
 						
 
 
 					</ul>
 				</div>
 			   <!-- fim Menu Horizontal -->
-			   <?php
-				 
-				if(isset($_GET['nav']))
-					$page=$_GET['nav'].".php";
-				else
-					$page="vitrine.php";
-				
-				include($page);
-			   
-			   ?-->
+				<div ng-view></div>
 			</div>
 			<!--fim conteudo-->
 			
 			<!-- FOOTER -->
-			<!--?php include('footer.php');?-->
+			<div class="footer">
+				<span class="footer_note">Copyright 2015-{{anoAtual}}</span>
+			</div>
 			<!-- fim FOOTER -->
 
 		</div>
