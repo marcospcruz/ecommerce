@@ -1,0 +1,6 @@
+'use strict';
+
+/* App Module */
+
+var ecommerceApp=angular.module('ecommerceApp',['ecommerceLayoutCntrl']);
+
