@@ -32,8 +32,8 @@
 							<li><a href="#">Home</a></li>
 							<li><a href="#">Produtos</a>
 								<ul>
-									<li><a href="acessorios.html">Acessórios</a></li>
-									<li><a href="suplementos.html">Suplementos</a></li>								
+									<li ng-repeat="categoriaProdutos in myData"><a href="#" ng-model="queryCategoria" ng-init="queryCategoria=categoriaProdutos.descricao">{{categoriaProdutos.descricao}} </a></li>
+																
 								</ul>
 							</li>
 							<li><a href="#">Extras</a></li>

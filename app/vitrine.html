@@ -7,10 +7,11 @@
 
 	</select> - 
 	Procurar na Vitrine: <input type='text' ng-model='query'>
+usar |filter:query|orderBy:ordem
 </div-->
 <div class="vitrine" >
 	<!--produto-->
-	<div class="column" ng-repeat="item in myData|filter:query|orderBy:ordem">
+	<div class="column" ng-repeat="item in myData">
 		<img class="mostruario" src="{{item.caminho_foto}}" alt="" />
 		
 		<div ng-show="item.porcentagem_desconto > 0">

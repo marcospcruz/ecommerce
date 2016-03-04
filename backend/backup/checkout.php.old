@@ -1,0 +1,72 @@
+<?php
+function PrintTrace() {
+    $trace = debug_backtrace();
+    echo '<pre>';
+    $sb = array();
+    foreach($trace as $item) {
+        if(isset($item['file'])) {
+            $sb[] = htmlspecialchars("$item[file]:$item[line]");
+        } else {
+            $sb[] = htmlspecialchars("$item[class]:$item[function]");
+        }
+    }
+    echo implode("\n",$sb);
+    echo '</pre>';
+}
+//PrintTrace();
+?>
+<div class="cart_container">
+	<a href="loja.php">voltar</a>
+	<table class="cart_grid">
+		<thead>
+			<tr>
+				<th>Produto</th>
+				<th>Quantidade</th>
+				<th>Valor Unitário</th>
+				<th>Promoção</th>
+				<th>Valor Total</th>
+			</tr>
+		</thead>
+		<?php
+			//include("domain/produtoTO.php");
+			$cartManager=new CartManager();
+			$utilitario=new Utilitario();
+
+			while($cartManager->hasItem()){
+	
+				$item=$cartManager->getItem();
+				$produto=$item[0];
+				$fabricante=$produto->__get("fabricante");
+				$tipoProduto=$produto->__get("tipoProduto");
+				$quantidade=$item[1];
+				$itemEstoque=$produto->__get("itemEstoque");
+				$photo_path="images/Produtos/".strtoupper($categoriaProduto->__get("descricao"))."/".strtolower($tipoProduto->__get("descricao"))."/";
+				$valorUnitario=$itemEstoque->__get("valorUnitario");
+				$desconto=$itemEstoque->__get("porcentagemDesconto");						
+				$valorTotal=$quantidade*($utilitario->calculaValorFinal($valorUnitario,$desconto));
+				$totalCompra+=$valorTotal;
+		?>
+		<tr>
+			<td>
+				<?=$tipoProduto->__get('descricao')?>&nbsp;
+				<?=$fabricante->__get('nomeFabricante')?>&nbsp;
+			</td>
+			<td>
+				<input type="text" name="cart_qt" id="cart_qt" value="<?=$quantidade?>" size="5">
+				<span class="increase_qt"><a href="#" onclick="addToCart(<?=$produto->__get('idProduto')?>);">+</a></span><span class="decrease_qt"><a href="#" onclick="removeUmItem(<?=$produto->__get('idProduto')?>);">-</a></span>
+			</td>
+			<td><?=$valorUnitario?></td>
+			<td>
+			   <?php
+				if($desconto>0)
+				   echo $desconto."%";	
+			   ?>
+			</td>
+			<td><?=number_format($valorTotal,2,'.',',')?></td>
+	
+		</tr>
+	
+		<?php } ?>
+		<tr class="cart_grid_footer"><td colspan="4">Valor Total da Compra:</td><td><?=number_format($totalCompra,2,'.',',')?></td>
+	</table>
+</div>

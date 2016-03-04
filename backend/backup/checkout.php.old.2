@@ -1,0 +1,42 @@
+<?php
+function PrintTrace() {
+    $trace = debug_backtrace();
+    echo '<pre>';
+    $sb = array();
+    foreach($trace as $item) {
+        if(isset($item['file'])) {
+            $sb[] = htmlspecialchars("$item[file]:$item[line]");
+        } else {
+            $sb[] = htmlspecialchars("$item[class]:$item[function]");
+        }
+    }
+    echo implode("\n",$sb);
+    echo '</pre>';
+}
+//PrintTrace();
+?>
+<script>
+	loadCart("cart_grid");
+	$(document).ready(function(){
+		
+	});
+</script>
+<div class="cart_container">
+	<!--a href="loja.php">voltar</a-->
+	<table class="cart_grid" id="cart_grid">
+		<thead>
+			<tr>
+				<th>Produto</th>
+				<th>Quantidade</th>
+				<th>Valor Unitário</th>
+				<th>Promoção</th>
+				<th>Valor Total</th>
+			</tr>
+		</thead>
+		
+		
+	</table>
+	
+</div>
+
+

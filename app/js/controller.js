@@ -2,11 +2,12 @@
 
 /* Controllers */
 
-var url="http://localhost/xtreme/site2/loja/action";
+var url="../backend/action";
 
 var ecommerceControllers=angular.module('ecommerceControllers',[]);
 
 ecommerceControllers.controller('ecommerceLayoutCntrl',['$scope','$http',function($scope,$http){
+	
 	$http.get(url+"/startupAction.php").then(function(response){
 
 		$scope.totalItensCarrinho=response.data[0].totalItensCarrinho;

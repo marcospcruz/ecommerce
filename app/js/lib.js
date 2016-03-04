@@ -1,4 +1,4 @@
-var urlCartAction='http://localhost/xtreme/site2/loja/cart/updateCart.php';
+var urlCartAction='../backend/cart/updateCart.php';
 var addCartFunction=function($scope,$http,$routeParams,$location){
 	console.log('- adicionando item no carrinho.');
 	var data=JSON.stringify({idProduto:$routeParams.idProduto,action:'add'});
@@ -21,7 +21,7 @@ var addCartFunction=function($scope,$http,$routeParams,$location){
 
 
 var loadVitrine=function($scope,$http,$routeParams){
-	console.log('Loading vitrine...');
+	console.log('loadVitrine:'+url+"/vitrineAction.php");
 	$http({
 		method: 'POST',
 		url:	url+"/vitrineAction.php",
