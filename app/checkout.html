@@ -1,0 +1,30 @@
+<div class="cart_container">
+	<!--a href="loja.php">voltar</a-->
+	<table class="cart_grid" id="cart_grid">
+		<thead>
+			<tr>
+				<th>Produto</th>
+				<th>Quantidade</th>
+				<th>Valor Unitário</th>
+				<th>Promoção</th>
+				<th>Valor Total</th>
+			</tr>
+		</thead>
+		
+		<tr ng-repeat="item in cart" ng-class-odd="'oddRow'">
+			<td>{{item.produto}}</td>
+			<td>{{item.quantidade}}</td>
+			<td>{{item.valorUnitario|currency}}</td>
+			<td>{{item.desconto}}</td>
+			<td>{{item.valorTotal|currency}}</td>
+		</tr>
+		<tr>
+			<td class='cart_grid_footer' colspan='4'>Valor Total da Compra:</td><td class='cart_grid_footer'>{{cartValorTotal|currency}}</td>				
+		</tr>
+	</table>
+	
+</div>
+
+
+<!--input type="text" name="cart_qt" disabled="yes" id="cart_qt" value="'.$quantidade.'" size="5"><span class="increase_qt"><a href="#" class="update_cart" onclick="addToCart('.$produto->__get('idProduto').');">+</a></span><span class="decrease_qt"><a href="#" class="update_cart" onclick="removeUmItem('.$produto->__get('idProduto').');">-</a></span-->
+

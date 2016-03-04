@@ -19,7 +19,7 @@ ecommerceApp.config(['$routeProvider',
 				templateUrl: 	'vitrine.html',
 				controller:	'adicionaItemController'	
 			}).
-			when('/checkout/',{
+			when('/loja/checkout/',{
 				templateUrl: 	'checkout.html',
 				controller:	'checkoutController'	
 			}).

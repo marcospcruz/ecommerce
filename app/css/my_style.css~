@@ -380,7 +380,7 @@ html,body {
 	
 }
 
-.cart_grid .oddRow{
+.cart_grid #oddRow{
 	background-color: #E0E0E0;
 }
 /*.cart_grid tr td .increase_qt{
