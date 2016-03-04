@@ -1,9 +1,7 @@
 var urlCartAction='http://localhost/xtreme/site2/loja/cart/updateCart.php';
 var addCartFunction=function($scope,$http,$routeParams,$location){
-
+	console.log('- adicionando item no carrinho.');
 	var data=JSON.stringify({idProduto:$routeParams.idProduto,action:'add'});
-	console.log(data);
-
 	$http({
 		method: 'POST',
 		url:	urlCartAction,
@@ -16,14 +14,14 @@ var addCartFunction=function($scope,$http,$routeParams,$location){
 		$location.path('#/loja');
 
 	},function(response){
-		console.log('erro:'+JSON.stringify(response));
+		console.log('erro em addCartFunction:'+JSON.stringify(response));
 	});
 };
 
 
 
 var loadVitrine=function($scope,$http,$routeParams){
-
+	console.log('Loading vitrine...');
 	$http({
 		method: 'POST',
 		url:	url+"/vitrineAction.php",
@@ -32,13 +30,16 @@ var loadVitrine=function($scope,$http,$routeParams){
 	}).then(function(response){
 		$scope.myData=response.data[1];
 		$scope.totalItensCarrinho=response.data[0].totalItensCarrinho;
-		console.log('Loading vitrine...');
 
-	},function(response){console.log('erro'+JSON.stringify(response));});
+	},function(response){console.log('erro em loadVitrine:'+JSON.stringify(response));});
 }
 
-function numeroParaMoeda(n, c, d, t){
-    c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
-    return "R$ "+s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-}
+var checkoutViewController=function($scope,$http){
 
+	$http.get('http://localhost/xtreme/site2/loja/cart/checkoutBuilder.php').then(function(response){
+		$scope.cart=response.data[0].cart;
+		$scope.cartValorTotal=response.data[1].totalCompra;
+		document.getElementById('cart_qt').innerHTML=response.data[2].totalItensCarrinho;		
+		//console.log(JSON.stringify(response.data[response.data.length-1].totalCompra));
+	},function(response){console.log('erro:'+JSON.stringify(response));});
+};
