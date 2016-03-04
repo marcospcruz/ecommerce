@@ -31,9 +31,9 @@
 		deduzEstoque($itemEstoque,-1);
 		$retorno=addProduto($produto);	
 	
-	}if(isset($_GET['delIdProduto'])){ 
+	}if($request->action=='del'){ 
 
-		$idProduto=$_GET['delIdProduto'];
+		$idProduto=$request->idProduto;
 		$retorno=delProduto($idProduto);
 
 	}
@@ -91,6 +91,7 @@
 
 	}
 	function delProduto($idProduto){
+
 		$produto=carregaProduto($idProduto);
 		//$produto->__set("idProduto",$idProduto);
 		deduzEstoque($produto->__get('itemEstoque'),1);

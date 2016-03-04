@@ -13,8 +13,9 @@
 		
 		<tr ng-repeat="item in cart" ng-class-odd="'oddRow'">
 			<td>{{item.produto}}</td>
-			<td>{{item.quantidade}}</td>
-			<td>{{item.valorUnitario|currency}}</td>
+			<td ><span style="display: inline-block;width: 100px;text-align:center;">{{item.quantidade}}</span><span class="increase_qt"><a href="#/loja/add/{{item.idProduto}}/cart" class="update_cart" ng-hide="hideLinkAdd=(item.saldoEstoque==0);">+</a></span>
+<span class="decrease_qt"><a href="#/loja/del/{{item.idProduto}}/cart" class="update_cart">-</a></span></td>
+			<td >{{item.valorUnitario|currency}}</td>
 			<td>{{item.desconto}}</td>
 			<td>{{item.valorTotal|currency}}</td>
 		</tr>
@@ -24,7 +25,6 @@
 	</table>
 	
 </div>
-
 
 <!--input type="text" name="cart_qt" disabled="yes" id="cart_qt" value="'.$quantidade.'" size="5"><span class="increase_qt"><a href="#" class="update_cart" onclick="addToCart('.$produto->__get('idProduto').');">+</a></span><span class="decrease_qt"><a href="#" class="update_cart" onclick="removeUmItem('.$produto->__get('idProduto').');">-</a></span-->
 

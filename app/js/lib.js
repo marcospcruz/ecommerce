@@ -1,7 +1,10 @@
 var urlCartAction='../backend/cart/updateCart.php';
-var addCartFunction=function($scope,$http,$routeParams,$location){
+
+var updateCartFunction=function($scope,$http,$routeParams,$location){
 	console.log('- adicionando item no carrinho.');
-	var data=JSON.stringify({idProduto:$routeParams.idProduto,action:'add'});
+	console.log('routeparams:'+JSON.stringify($routeParams));
+	var data=JSON.stringify({idProduto:$routeParams.idProduto,action:$routeParams.action});
+		console.log('data:'+JSON.stringify($routeParams));
 	$http({
 		method: 'POST',
 		url:	urlCartAction,
@@ -11,11 +14,16 @@ var addCartFunction=function($scope,$http,$routeParams,$location){
 		console.log(JSON.stringify(response.data));
 		document.getElementById('cart_qt').innerHTML=response.data;
 		//alert(document.getElementById('cart_qt').innerHTML);
-		$location.path('#/loja');
+		
 
 	},function(response){
 		console.log('erro em addCartFunction:'+JSON.stringify(response));
 	});
+	if($routeParams.origemRequest=="vitrine"){
+		$location.path('loja');
+	}else if($routeParams.origemRequest=="cart"){
+		$location.path('checkout');
+	}
 };
 
 
@@ -24,7 +32,7 @@ var loadVitrine=function($scope,$http,$routeParams){
 	console.log('loadVitrine:'+url+"/vitrineAction.php");
 	$http({
 		method: 'POST',
-		url:	url+"/vitrineAction.php",
+		url:	url+"action/vitrineAction.php",
 		data:	JSON.stringify({idTipoProduto:$routeParams.idTipoProduto}),
 		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }	
 	}).then(function(response){
@@ -36,10 +44,12 @@ var loadVitrine=function($scope,$http,$routeParams){
 
 var checkoutViewController=function($scope,$http){
 
-	$http.get('http://localhost/xtreme/site2/loja/cart/checkoutBuilder.php').then(function(response){
+	$http.get(url+'/cart/checkoutBuilder.php').then(function(response){
 		$scope.cart=response.data[0].cart;
 		$scope.cartValorTotal=response.data[1].totalCompra;
 		document.getElementById('cart_qt').innerHTML=response.data[2].totalItensCarrinho;		
-		//console.log(JSON.stringify(response.data[response.data.length-1].totalCompra));
+		console.log(JSON.stringify(response.data[0].cart));
+		
 	},function(response){console.log('erro:'+JSON.stringify(response));});
+
 };

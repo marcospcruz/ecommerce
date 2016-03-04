@@ -2,13 +2,13 @@
 
 /* Controllers */
 
-var url="../backend/action";
+var url="../backend/";
 
 var ecommerceControllers=angular.module('ecommerceControllers',[]);
 
 ecommerceControllers.controller('ecommerceLayoutCntrl',['$scope','$http',function($scope,$http){
 	
-	$http.get(url+"/startupAction.php").then(function(response){
+	$http.get(url+"action/startupAction.php").then(function(response){
 
 		$scope.totalItensCarrinho=response.data[0].totalItensCarrinho;
 		$scope.myData=response.data[1].categoriasProdutos;		
@@ -21,8 +21,7 @@ ecommerceControllers.controller('ecommerceLayoutCntrl',['$scope','$http',functio
 
 ecommerceControllers.controller('vitrineController',['$scope','$http','$routeParams',loadVitrine]);
 
-ecommerceControllers.controller('adicionaItemController',['$scope','$http','$routeParams','$location',addCartFunction]);
-
+ecommerceControllers.controller('atualizaCarrinhoController',['$scope','$http','$routeParams','$location',updateCartFunction]);
 
 ecommerceControllers.controller('checkoutController',['$scope','$http',checkoutViewController]);
 

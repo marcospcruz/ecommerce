@@ -3,13 +3,16 @@
 include("cartManager.php");
 include("../domain/categoriaProdutoTO.php");
 include("../domain/itemEstoqueTO.php");
+include("../dao/produtoDAO.php");
 include("../domain/tipoProdutoTO.php");
+include("../dao/tipoProdutoDAO.php");
 include("../domain/fabricanteTO.php");
+include("../dao/fabricanteDAO.php");
 include("../util/utilitario.php");
 //include("domain/produtoTO.php");
 $cartManager=new CartManager();
 $utilitario=new Utilitario();
-
+$produtoDao=new ProdutoDAO();
 $cont=0;
 
 $cart=array();
@@ -19,7 +22,7 @@ while($cartManager->hasItem()){
 	$item = $cartManager->getItem();
 	//echo json_encode($cartManager->getItem());
 	$produto=$utilitario->autoLoadObject($item[0]);
-
+	$produto=$produtoDao->read($produto->__get("idProduto"));
 	$fabricante=$utilitario->autoLoadObject($produto->__get("fabricante"));
 
 	$tipoProduto=$utilitario->autoLoadObject($produto->__get("tipoProduto"));
@@ -48,10 +51,12 @@ while($cartManager->hasItem()){
 		$desconto='';
 	
 	$cart[$cont]=array(
+		'idProduto'=>$produto->__get('idProduto'),		
 		'produto'=>$tipoProduto->__get('descricao')." ".$fabricante->__get('nomeFabricante'),
 		'quantidade'=>$quantidade,
 		'valorUnitario'=>number_format($valorUnitario,2,'.',','),
 		'desconto'=>$desconto,
+		'saldoEstoque'=>$itemEstoque->__get('quantidade'),
 		'valorTotal'=>$valorTotal
 		);
 
