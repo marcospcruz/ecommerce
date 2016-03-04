@@ -39,17 +39,7 @@
 	}
 	//teste
 	
-	if(isset($_GET['addIdProduto'])){ 
-
-		$idProduto=$_GET['addIdProduto'];
-		//echo $idProduto;
-		$produto=carregaProduto($idProduto);
-		$itemEstoque=$produto->__get('itemEstoque');
-		deduzEstoque($itemEstoque,-1);
-		$retorno=addProduto($produto);	
-
-
-	}
+	
 	
 	//echo $idProduto;
 	//echo serialize($produto);
@@ -72,14 +62,13 @@
 	}
 	function addProduto($produto){
 		$cartManager=new CartManager();	
-
-		controlaEstoqueTemp($produto->__get('itemEstoque'),$cartManager->getSessionId());
 		if(!isset($produto))
 			die(":x");
+		adicionaEstoqueTemp($produto->__get('itemEstoque'),$cartManager->getSessionId());
 		$cartManager->addProduct($produto);
 		return $cartManager->getTotalItens();
 	}
-	function controlaEstoqueTemp($itemEstoque,$sessionId){
+	function adicionaEstoqueTemp($itemEstoque,$sessionId){
 
 		$tempCartDao=new CompraTempDAO();
 		$itemTemp=new CompraTempTO();		
@@ -90,6 +79,13 @@
 		$tempCartDao->insere($itemTemp);
 
 	}
+	function removeEstoqueTemp($itemEstoque,$sessionId){
+		$tempCartDao=new CompraTempDAO();
+		$itemTemp=$tempCartDao->readLastCompraTemp($itemEstoque);		
+		$utilitario=new Utilitario();
+		$tempCartDao->delete($itemTemp);
+
+	}
 	function delProduto($idProduto){
 
 		$produto=carregaProduto($idProduto);
@@ -97,6 +93,7 @@
 		deduzEstoque($produto->__get('itemEstoque'),1);
 		$cartManager=new CartManager();
 		$cartManager->delProduct($produto);
+		removeEstoqueTemp($produto->__get('itemEstoque'),$cartManager->getSessionId());
 		return $cartManager->getTotalItens();
 	}
 ?>

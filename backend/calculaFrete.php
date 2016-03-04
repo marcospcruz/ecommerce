@@ -19,8 +19,9 @@ dimensao caixa: comprimento x largura x altura
 	$alturaCaixa=100;
 	
 	$pacoteFinal=array();
-
+	
 	$cep_DST=$_GET['CEP_DESTINO'];
+
 	$cartManager=new CartManager();
 	$servicoLogistica=new ServicoLogisticaServices();
 	$utilitario=new Utilitario();	
@@ -163,7 +164,8 @@ class Empacotador{
 		}
 		echo 'relatorio pacote '.($indicePacote+1).'<br>';
 		$this->pacotes[$indicePacote]->relatorioPacote();
-		//echo '<br>--------------------------<br>';
+		echo sizeof($this->pacotes).' pacotes ';		
+		echo '<br>--------------------------<br>';
 
 		
 		//die("<br>here");
@@ -200,19 +202,7 @@ class Empacotador{
 		if(property_exists($this,$property)){
 			return $this->$property;
 		}
-	}
-
-	/*function abrePacote($qtPacote,$produto,$quantidade,$pacoteFinal){
-
-		$pacoteFrete=obtemPacoteAberto($pacoteFinal);
-		if(sizeof($pacoteFinal)==0||!isset($pacoteFrete)){		
-			$pacoteFrete=new PacoteFreteTO();
 		}
-
-		$itensPacote=$pacoteFrete->__get("itens");
-
-		$alturaProdutos	
-	}*/
 
 
 }
