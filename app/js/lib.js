@@ -40,7 +40,7 @@ var loadVitrine=function($scope,$http,$routeParams){
 		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }	
 	}).then(function(response){
 		$scope.myData=response.data[1];
-		$scope.totalItensCarrinho=response.data[0].totalItensCarrinho;
+		document.getElementById('cart_qt').innerHTML=response.data[0].totalItensCarrinho;
 		console.log(response.data);
 
 	},function(response){console.log('erro em loadVitrine:'+JSON.stringify(response));});
@@ -59,3 +59,20 @@ var checkoutViewController=function($scope,$http){
 	},function(response){console.log('erro:'+JSON.stringify(response));});
 
 };
+
+
+
+function justNumber(e){
+    var tecla=(window.event)?event.keyCode:e.which;   
+    if((tecla>47 && tecla<58)) return true;
+    else{
+    	if (tecla==8 || tecla==0) return true;
+	else  return false;
+    }
+}
+
+function autoTab(from,to){
+	if(from.getAttribute("maxLength")==from.value.length){
+		to.focus();
+	}
+}

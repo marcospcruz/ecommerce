@@ -20,8 +20,13 @@
 			<td>{{item.valorTotal|currency}}</td>
 		</tr>
 		<tr>
+			<td colspan="4" class='cart_grid_footer'><label class="form_frete"><span>Digite o CEP para cálculo do frete:</span><input type="text" maxlength="5" size="3" id="cep_prefixo" onkeypress="return justNumber(event);" onkeyup="autoTab(this,cep_sufixo)">-<input type="text" maxlength="3" size="1" id="cep_sufixo" name="cep_sufixo" onkeypress="return justNumber(event);"><button onclick="calculaFrete(cep_prefixo.value,cep_sufixo.value);">Calcular</button></label></td>
+			<td class='cart_grid_footer'></td>		
+		</tr>
+		<tr>
 			<td class='cart_grid_footer' colspan='4'>Valor Total da Compra:</td><td class='cart_grid_footer'>{{cartValorTotal|currency}}</td>				
 		</tr>
+		
 	</table>
 	
 </div>

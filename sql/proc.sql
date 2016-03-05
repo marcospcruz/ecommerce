@@ -13,8 +13,7 @@ BEGIN
 	/**
 	  * declarando cursor para receber a consulta em carrinho_temp relacionada ao estoqueProduto
 	  **/
-	declare _cursor cursor for 
-		select  C.idEstoqueProduto,C.idCompraTemp,ep.quantidade from carrinho_temp C inner join estoqueProduto ep on ep.idEstoqueProduto=C.idEstoqueProduto where timestampdiff(minute,C.datahoracompra,now())>LIMITE_TEMPO;
+	declare _cursor cursor for select  C.idEstoqueProduto,C.idCompraTemp,ep.quantidade from carrinho_temp C inner join estoqueProduto ep on ep.idEstoqueProduto=C.idEstoqueProduto where timestampdiff(minute,C.datahoracompra,now())>LIMITE_TEMPO;
 
 	/**
 	  * Limite de tempo em MINUTOS que os itens de compras estarão reservados.
@@ -50,10 +49,11 @@ DELIMITER ;
 
 
 
-/*
- * CRIANDO JOB
- */
---show processlist
+/**
+  * CRIANDO JOB
+  * show processlist
+  **/
+--
 SET GLOBAL event_scheduler = ON;
 
 grant event on xtreme_sote.* to root@localhost;
@@ -66,5 +66,7 @@ CREATE EVENT LIMPA_TEMP_CART_JOB
     DO
       CALL LIMPA_TEMP_CART;
 
-
---SELECT event_schema,event_name,interval_value,interval_field,definer,event_definition,EVENT_TYPE,last_executed  FROM INFORMATION_SCHEMA.EVENTS;
+/**
+  * SELECT event_schema,event_name,interval_value,interval_field,definer,event_definition,EVENT_TYPE,last_executed  FROM
+  * INFORMATION_SCHEMA.EVENTS;
+  **/

@@ -57,18 +57,12 @@ class PacoteFreteTO{
 	}
 
 	public function addItem($dimensaoItem,$pesoItem){
-		//echo 'espaço vazio:'.$this->dimensaoEspacoVazio[self::EIXO_Y].'|'.$this->dimensaoEspacoVazio[self::EIXO_X].'|'.$this->dimensaoEspacoVazio[self::EIXO_Z].' ';		
-		//echo $alturaItem." ".$comprimentoItem." ".$larguraItem." ".$pesoItem;
+
 		$this->pesoPacote+=$pesoItem;
 	
 		if(!isset($this->pacote[0][0])){
-		//if($this->x==0){
-			//$this->preencheEspacoVazio(self::EIXO_X,$dimensaoItem[self::EIXO_X]);
-			//$this->preencheEspacoVazio(self::EIXO_Z,$dimensaoItem[self::EIXO_Z]);
 			$this->larguraPreenchida+=$dimensaoItem[self::EIXO_Z];
 			$this->ultimaLarguraPreenchida=$this->larguraPreenchida;
-			//$this->ultimoComprimentoPreenchido+=$dimensaoItem[self::EIXO_X];
-			//$this->preencheEspacoVazio(self::EIXO_Y,$dimensaoItem[self::EIXO_Y]);
 
 		}
 
@@ -76,7 +70,6 @@ class PacoteFreteTO{
 			if($this->x==0){
 				$this->dimensaoEspacoVazio[self::EIXO_X]=$this->dimensaoPacote[self::EIXO_Y];
 				$this->preencheEspacoVazio(self::EIXO_Z,$dimensaoItem[self::EIXO_Z]);
-				//$this->ultimaLarguraPreenchida+=$dimensaoItem[self::EIXO_Z];
 			}			
 
 			$this->dimensaoEspacoVazio[self::EIXO_Y]=$this->dimensaoPacote[self::EIXO_Y];
@@ -89,11 +82,6 @@ class PacoteFreteTO{
 
 		$this->organizaPacote($dimensaoItem);
 
-		//$this->imprime("#------------ultimaLarguraPreenchida:".$this->larguraPreenchida." ultimoComprimentoPreenchido:".$this->ultimoComprimentoPreenchido." ultimaAlturaPreenchida:".$this->ultimaAlturaPreenchida);
-
-
-		//echo 'espaço vazio:'.$this->dimensaoEspacoVazio[self::EIXO_Y].'|'.$this->dimensaoEspacoVazio[self::EIXO_X].'|'.$this->dimensaoEspacoVazio[self::EIXO_Z].' ';
-
 	}
 	/**
 	  *
@@ -103,18 +91,13 @@ class PacoteFreteTO{
 	}
 
 	private function organizaPacote($item){
-
-		//if(!isset($this->ultimoComprimentoPreenchido)){
-			//$this->ultimoComprimentoPreenchido=$item[self::EIXO_X];
-		//	$this->larguraPreenchida=$item[self::EIXO_Z];
-		//}
 		
 		$alturaPacote=$this->dimensaoPacote[self::EIXO_Y];
 		$comprimentoPacote=$this->dimensaoPacote[self::EIXO_X];
 		$larguraPacote=$this->dimensaoPacote[self::EIXO_Z];
 
 		$this->pacote[$this->z][$this->x][$this->y]=$item;
-		$this->imprime('#------------------------------------->'.$this->z.','.$this->x.','.$this->y);
+		//$this->imprime('#------------------------------------->'.$this->z.','.$this->x.','.$this->y);
 		$this->ultimaAlturaPreenchida+=$item[self::EIXO_Y];
 		$this->preencheEspacoVazio(self::EIXO_Y,$item[self::EIXO_Y]);
 		//die();
@@ -130,28 +113,16 @@ class PacoteFreteTO{
 
 			}
 			if($this->ultimaAlturaPreenchida>=($alturaPacote-$item[self::EIXO_Y])){
-				//$this->dimensaoEspacoVazio[self::EIXO_Y]=$alturaPacote;
 				$this->x++;
 				$this->y=0;
 				$this->ultimaAlturaPreenchida=0;
 				
-				//$this->imprime($this->ultimoComprimentoPreenchido); 
-
-				//$this->preencheEspacoVazio(self::EIXO_X,$item[self::EIXO_X]);
-				//echo '------------------->'.$this->comprimentoPreenchido;
-				//$this->comprimentoPreenchido=$this->ultimoComprimentoPreenchido;
-
 			}
-			//$this->imprime($this->ultimoComprimentoPreenchido);
 
 			if($this->ultimoComprimentoPreenchido>=($comprimentoPacote-$item[self::EIXO_X])){
 				$this->x=0;
 				$this->z++;
-				//$this->imprime($this->ultimoComprimentoPreenchido);
 				$this->larguraPreenchida+=$item[self::EIXO_Z];
-				//$this->ultimaLarguraPreenchida+=$item[self::EIXO_Z];//$this->larguraPreenchida;
-				//$this->preencheEspacoVazio(self::EIXO_Z,$item[self::EIXO_Z]);
-				//$this->dimensaoEspacoVazio[self::EIXO_X]=$comprimentoPacote-$item[self::EIXO_X];
 				$this->ultimoComprimentoPreenchido=0;
 
 			}
@@ -173,11 +144,6 @@ class PacoteFreteTO{
 		$this->imprime("ultimo comprimento:".$this->ultimoComprimentoPreenchido);
 		$this->imprime("ultima largura:".$this->ultimaLarguraPreenchida);
 		
-		//$this->imprime("x:".$this->x.' y:'.$this->y.' z:'.$this->z);
-
-		//$this->imprime("<br>---<br>restante altura a preencher:".(self::ALTURA_CAIXA-$alturaPreenchida));
-		//$this->imprime("restante comprimento a preencher:".(self::COMPRIMENTO_CAIXA-$comprimentoPreenchido));
-		//$this->imprime("restante largura a preencher:".(self::LARGURA_CAIXA-$larguraPreenchida));
 		$this->imprime("Peso Total: ".$this->pesoPacote);
 		$this->imprime("");
 
@@ -209,38 +175,12 @@ class PacoteFreteTO{
 			return true;
 
 		return false;
-		/*if($this->alturaPreenchida>$this->ultimaAlturaPreenchida)
-			echo ($this->alturaPreenchida-$this->ultimaAlturaPreenchida).'x<br>';
-		elseif($this->alturaPreenchida==$this->ultimaAlturaPreenchida){
-
-			if($vazioY>($this->alturaPreenchida-$dimensoesItem[self::EIXO_Y]))
-				echo $vazioY;
-		}
-
-		if($dimensoesItem[self::EIXO_Y]<=$vazioY){
-			return true;
-		}elseif($dimensoesItem[self::EIXO_X]<=$vazioX){			
-			return true;
-		}elseif($dimensoesItem[self::EIXO_Z]<=$vazioZ){
-			return true;
-		}else{
-			return false;
-		}*/
+		
 	}
 
-	function teste(){
-		
-		
-		for($z=0;$z<sizeof($this->pacote);$z++){
-			//echo serialize($this->pacote[$z]).'<br>';
-			for($x=0;$x<sizeof($this->pacote[$z]);$x++){
-				for($y=0;$y<sizeof($this->pacote[$z][$x]);$y++){
-					echo serialize($this->pacote[$z][$x][$y]).'<br>';
-				//	echo $z;
-				//	echo ','.$x;
-				//	echo ','.$y.'<br>';
-				} 
-			}
+	public function __get($property) {
+		if (property_exists($this, $property)) {
+			return $this->$property;
 		}
 	}
 }

@@ -32,9 +32,6 @@ dimensao caixa: comprimento x largura x altura
 
 	$itens=$cartManager->getItens();
 
-	//$maiorAltura=limitar($itens,'altura',true);
-	//$menorAltura=limitar($itens,'altura',false);
-
 	$qtUnidades= $cartManager->getQtUnits();
 
 	$parametros=null;
@@ -44,20 +41,8 @@ dimensao caixa: comprimento x largura x altura
 
 		$itemCompra=$cartManager->getItem();
 		$empacotador->empacota($itemCompra);
-		//die();
-		//$parametros=criaPacote($itemCompra,$totalItens,$pacoteFinal);
-		//$pacoteFinal=criaPacote($itemCompra,$totalItens,$pacoteFinal);
-	
-		/*aif($totalItens<3){
-			echo "rolo prisma";
-		}if(($totalItens%3)==0){
-			echo "pacote triangulo<br><br>";
-		}elseif($totalItens>3){
-			echo "pacote quadrado<br><br>";	
-
-		}*/
 	}
-
+	echo "Total de Pacotes: ".$empacotador->getTotalPacotes();
 
 //echo $parametros[0];
 //calculaFreteEntrega($cepOrigem,$cepDestino,$pesoPacote,$formatoPacote,$comprimentoPacote,$alturaPacote,$larguraPacote,$diametroPacote,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega)
@@ -90,7 +75,9 @@ class Empacotador{
 
 
 	}
-
+	public function getTotalPacotes(){
+		return sizeof($this->pacotes);
+	}
 	private function imprime($string){
 		$br="<br>";		
 		echo $br.$string.$br;
@@ -147,25 +134,23 @@ class Empacotador{
 		
 		$pesoItem=$itemEstoque->__get("peso");
 
-		
-		//$this->imprime('comprimento item:'.$comprimentoItem);
 		$indicePacote=0;
 		$item=1;
-		//$this->pacotes[$indicePacote]=new PacoteFreteTO();
+
 		while($item<=$quantidade){
 			
 			$this->getPacoteFrete($dimensaoItem);	
 			$indicePacote=$this->indicePacote;
 
 			$this->pacotes[$indicePacote]->addItem($dimensaoItem,$pesoItem);
-			echo 'Pacote'.($indicePacote+1).'-item'.$item.'<br>';
+			//echo 'Pacote'.($indicePacote+1).'-item'.$item.'<br>';
 			
 			$item++;
 		}
-		echo 'relatorio pacote '.($indicePacote+1).'<br>';
-		$this->pacotes[$indicePacote]->relatorioPacote();
-		echo sizeof($this->pacotes).' pacotes ';		
-		echo '<br>--------------------------<br>';
+		//echo 'relatorio pacote '.($indicePacote+1).'<br>';
+		//$this->pacotes[$indicePacote]->relatorioPacote();
+		//echo sizeof($this->pacotes).' pacotes ';		
+		//echo '<br>--------------------------<br>';
 
 		
 		//die("<br>here");
@@ -202,8 +187,7 @@ class Empacotador{
 		if(property_exists($this,$property)){
 			return $this->$property;
 		}
-		}
-
+	}
 
 }
 
