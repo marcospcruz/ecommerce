@@ -62,7 +62,7 @@ CREATE TABLE `categoriaproduto` (
 
 LOCK TABLES `categoriaproduto` WRITE;
 /*!40000 ALTER TABLE `categoriaproduto` DISABLE KEYS */;
-INSERT INTO `categoriaproduto` VALUES (1,'Suplementos');
+
 /*!40000 ALTER TABLE `categoriaproduto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +101,6 @@ CREATE TABLE `db_cliente` (
 
 LOCK TABLES `db_cliente` WRITE;
 /*!40000 ALTER TABLE `db_cliente` DISABLE KEYS */;
-INSERT INTO `db_cliente` VALUES (1,'','Nicolas','','nicolas17172010@hotmail.com','','Masculino','','','n','mn','ndiojm','','(12)98230-6500','verificado'),(2,'asd','dada','dadafgoeo','ofmwofmw','s','Feminino','12235620','omfwomfwndaii','Parque Industrial','Rua Palmares','nsei','fowmfwo','fo','inativo');
 /*!40000 ALTER TABLE `db_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +134,6 @@ CREATE TABLE `estoqueProduto` (
 
 LOCK TABLES `estoqueProduto` WRITE;
 /*!40000 ALTER TABLE `estoqueProduto` DISABLE KEYS */;
-INSERT INTO `estoqueProduto` VALUES (1,1,3.00,189.90,10,26.00,26.00,14.00,48.00,0.91),(2,2,3.00,200.00,0,26.00,26.00,14.00,48.00,0.91),(3,3,3.00,150.00,0,5.00,5.00,14.00,48.00,0.10),(4,4,3.00,150.00,5,26.00,10.00,14.00,48.00,0.91);
 /*!40000 ALTER TABLE `estoqueProduto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +157,7 @@ CREATE TABLE `fabricante` (
 
 LOCK TABLES `fabricante` WRITE;
 /*!40000 ALTER TABLE `fabricante` DISABLE KEYS */;
-INSERT INTO `fabricante` VALUES (1,'Midway'),(2,'Max Titanium zzzzzzzzzz'),(3,'iron man'),(4,'Max Titanium'),(5,'Integralmedica'),(6,'Wilson');
+
 /*!40000 ALTER TABLE `fabricante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,7 +214,7 @@ CREATE TABLE `produto` (
 
 LOCK TABLES `produto` WRITE;
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-INSERT INTO `produto` VALUES (1,1,2,NULL,'whey2.jpg',0),(2,2,1,NULL,'whey1.jpg',0),(3,3,1,NULL,'whey2.jpg',0),(4,4,1,NULL,'whey2.jpg',0);
+
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +270,7 @@ CREATE TABLE `tipoproduto` (
 
 LOCK TABLES `tipoproduto` WRITE;
 /*!40000 ALTER TABLE `tipoproduto` DISABLE KEYS */;
-INSERT INTO `tipoproduto` VALUES (1,'Whey',1),(2,'Dextrose',1);
+
 /*!40000 ALTER TABLE `tipoproduto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
