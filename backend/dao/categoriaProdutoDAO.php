@@ -6,7 +6,7 @@ require("db/conexao.php");
 
 class CategoriaProdutoDAO
 {
-	private $SQL_SELECT="select cp.idcategoriaproduto,cp.descricao from categoriaproduto cp";
+	private $SQL_SELECT="select cp.idcategoriaproduto,cp.descricao from categoriaproduto cp order by cp.descricao";
 
 	public function readAll(){
 		$query=mysql_query($this->SQL_SELECT);
@@ -15,7 +15,7 @@ class CategoriaProdutoDAO
 			$index=sizeOf($dataArray);			
 			$categoriaProduto=new CategoriaProdutoTO();
 			$categoriaProduto->__set("idcategoriaproduto",$result[0]);
-			$categoriaProduto->__set("descricao",$result[1]);
+			$categoriaProduto->__set("descricao",utf8_encode($result[1]));
 			$tipoProdutoDAO=new TipoProdutoDAO();
 			$categoriaProduto->__set('tiposProdutos',$tipoProdutoDAO->readByCategoria($result[0]));
 			//die(serialize($categoriaProduto));

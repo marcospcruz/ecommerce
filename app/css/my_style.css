@@ -262,10 +262,11 @@ html,body {
    	color:white;
 	background: #228B22;
 	padding: 5px 5px 5px 5px;
+
 	
 }
 .menu_vertical_esquerda ul li{
-	padding: 10px 5px 1px 5px;
+	padding: 10px 5px 5px 5px;
 }
 .menu_vertical_esquerda ul li a{
 	text-decoration:none;

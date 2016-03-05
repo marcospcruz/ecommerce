@@ -1,5 +1,7 @@
 var urlCartAction='../backend/cart/updateCart.php';
-
+/**
+  *
+  **/
 var updateCartFunction=function($scope,$http,$routeParams,$location){
 	console.log('- adicionando item no carrinho.');
 	console.log('routeparams:'+JSON.stringify($routeParams));
@@ -26,8 +28,9 @@ var updateCartFunction=function($scope,$http,$routeParams,$location){
 	}
 };
 
-
-
+/**
+  *
+  **/
 var loadVitrine=function($scope,$http,$routeParams){
 	console.log('loadVitrine:'+url+"/vitrineAction.php");
 	$http({
@@ -38,10 +41,13 @@ var loadVitrine=function($scope,$http,$routeParams){
 	}).then(function(response){
 		$scope.myData=response.data[1];
 		$scope.totalItensCarrinho=response.data[0].totalItensCarrinho;
+		console.log(response.data);
 
 	},function(response){console.log('erro em loadVitrine:'+JSON.stringify(response));});
 }
-
+/**
+  *
+  **/
 var checkoutViewController=function($scope,$http){
 
 	$http.get(url+'/cart/checkoutBuilder.php').then(function(response){

@@ -1,5 +1,6 @@
 <?php
 //require_once("domain/tipoProdutoTO.php");
+header("Content-Type: text/html; charset=UTF-8",true);
 include("../cart/cartManager.php");
 require("../domain/tipoProdutoTO.php");
 require("../domain/fabricanteTO.php");
@@ -16,6 +17,11 @@ include("../dao/produtoDAO.php");
 require_once("../domain/categoriaProdutoTO.php");
 /**end of imports**/
 
+$tipoProdutoDao=new TipoProdutoDAO();
+$tiposProdutos=$tipoProdutoDao->readAll();
+
+$produtoDao=new ProdutoDAO();
+$util=new Utilitario();
 
 
 
@@ -30,34 +36,41 @@ $categoriaProdutoDAO=new CategoriaProdutoDAO();
 $categoriasProdutos=$categoriaProdutoDAO->readAll();
 $categoriasProdutosArray=array();
 
-
 foreach($categoriasProdutos as $categoriaProduto){
 
 	$tiposProdutos=$categoriaProduto->__get('tiposProdutos');
 
-	$tpArray=array();
-	foreach($tiposProdutos as $tipoProduto){
-		$tpArray[sizeof($tpArray)]=array(
-			$key=>$tipoProduto->__get($key),
-			'idTipoProduto'=>$tipoProduto->__get('idTipoProduto')
-		);
+	if($categoriaProduto->__get('tiposProdutos')!=null){
+		
+		$tpArray=array();
 
-	}
-	if(sizeof($tiposProdutos))
+		foreach($tiposProdutos as $tipoProduto){
+
+			$tpArray[sizeof($tpArray)]=array(
+				$key=>$tipoProduto->__get($key),
+				'idTipoProduto'=>$tipoProduto->__get('idTipoProduto')
+			);
+	
+		
+		}
+
+	
 		$categoriasProdutosArray[sizeof($categoriasProdutosArray)]=array(
 			$key=>$categoriaProduto->__get($key),
 			'tipos_produtos'=>$tpArray
 		);
 
+		//break;
+		
+
+	}
+
 }
 
-$json[sizeof($json)]=array('categoriasProdutos'=>$categoriasProdutosArray);
 
-$tipoProdutoDao=new TipoProdutoDAO();
-$tiposProdutos=$tipoProdutoDao->readAll();
-//die('aqui');
-$produtoDao=new ProdutoDAO();
-$util=new Utilitario();
+$json[sizeof($json)]=array('categoriasProdutos'=>$categoriasProdutosArray);
+//echo sizeof($json);
+//echo '<br>'.json_encode($json);
 
 $json[sizeof($json)]=array('anoAtual'=>date('Y'));
 

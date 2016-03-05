@@ -1,4 +1,5 @@
 <?php 
+	header("Content-Type: text/html; charset=UTF-8",true);
 	include("../cart/cartManager.php");
 	include("../util/utilitario.php");	
 	include("../dao/produtoDAO.php");
@@ -9,11 +10,10 @@
 	include("../domain/tipoProdutoTO.php");  
 	include("../domain/categoriaProdutoTO.php");  
 	include("../domain/itemEstoqueTO.php");  
+
 	
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);
-
-		
 	
 	$cartManager=new CartManager();
 	$produtoDao=new ProdutoDAO();
@@ -36,13 +36,15 @@
 
 	}else{
 		$produtos=$produtoDao->readProdutosByTipo($idTipoProduto);
+
 	}
 
 	foreach($produtos as $produto){
 		$fabricante=$produto->__get("fabricante");
 		$tipoProduto=$produto->__get("tipoProduto");
 		$categoriaProduto=$tipoProduto->__get("categoriaProduto");
-		$photo_path="images/Produtos/".strtoupper($categoriaProduto->__get("descricao"))."/".strtolower($tipoProduto->__get	("descricao"))."/";
+		$photo_path="images/Produtos/".strtoupper($util->tirarAcentos(utf8_encode($categoriaProduto->__get("descricao"))))."/".strtolower($tipoProduto->__get	("descricao"))."/";
+
 		$itemEstoque=$produto->__get("itemEstoque");
 		$porcentagem_desconto=$itemEstoque->__get("porcentagemDesconto");
 		$linhaValorProduto="";
@@ -50,14 +52,18 @@
 		$valorDecimal=$util->calculaValorFinal($itemEstoque->__get("valorUnitario"),$porcentagem_desconto);
 
 		if($porcentagem_desconto>0){
+
 			$promo_tag='<img src="images/promocao.jpg" class="promocao_pic">';
 			
 			//die($valorDecimal);
 			$linhaValorProduto="<span class='valor_promocional'>De R$ ".number_format($itemEstoque->__get	("valorUnitario"),2,',','.')."<br>";
 			$linhaValorProduto.="Para R$ ".number_format($valorDecimal,2,',','.')."</span>";					
 		}else{
+
 			$linhaValorProduto="<span class='valor_cheio'>R$ ".$itemEstoque->__get("valorUnitario")."</span>";
+
 		}
+
 		$estoque[sizeof($estoque)]=array(
 			'idProduto'=>$produto->__get('idProduto'),
 			'caminho_foto'=>$photo_path.$produto->__get('nomeArquivoFoto'),
@@ -74,7 +80,8 @@
 	
 	//$array_json[sizeof($array_json)]=array('estoque'=>$estoque);
 	$array_json[sizeof($array_json)]=$estoque;
-	echo json_encode($array_json);
 
-
+  	echo json_encode($array_json);
+	
+		
 ?>

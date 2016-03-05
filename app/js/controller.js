@@ -9,7 +9,7 @@ var ecommerceControllers=angular.module('ecommerceControllers',[]);
 ecommerceControllers.controller('ecommerceLayoutCntrl',['$scope','$http',function($scope,$http){
 	
 	$http.get(url+"action/startupAction.php").then(function(response){
-
+		console.log('ecommerceLayoutCNtrl: '+JSON.stringify(response));
 		$scope.totalItensCarrinho=response.data[0].totalItensCarrinho;
 		$scope.myData=response.data[1].categoriasProdutos;		
 		$scope.anoAtual=response.data[2].anoAtual;		
