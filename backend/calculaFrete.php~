@@ -31,8 +31,6 @@ dimensao caixa: comprimento x largura x altura
 	$formatoPacote='1';	//formato pacote 1 para caixa / pacote e 2 para rolo/prisma.
 	$entregaSomenteParaRemetenteInformado='s';
 	$confirmacaoEntrega='s';
-	$valorDeclarado=0;
-
 	$itens=$cartManager->getItens();
 
 	$qtUnidades= $cartManager->getQtUnits();
@@ -60,7 +58,7 @@ dimensao caixa: comprimento x largura x altura
 		echo "<li>altura pacote:".$altura.'</li></ul>';	
 
 
-		$servicoLogistica->calculaFreteEntrega('12200000',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,($comprimento*$altura*$largura),$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
+		$servicoLogistica->calculaFreteEntrega('12200000',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,($comprimento*$altura*$largura),$entregaSomenteParaRemetenteInformado,0,$confirmacaoEntrega);
 	}
 	
 

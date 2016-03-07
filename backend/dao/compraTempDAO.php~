@@ -25,7 +25,7 @@ class CompraTempDAO{
 	}
 
 	public function readLastCompraTemp($itemEstoque){
-		$SQL='select max(idCompraTemp) from carrinho_temp where idEstoqueProduto='.$itemEstoque->__get('idEstoqueProduto');
+		$SQL.='select max(idCompraTemp) from carrinho_temp where idEstoqueProduto='.$itemEstoque->__get('idEstoqueProduto');
 		$query=mysql_query($SQL);
 		$dataArray=array();
   	        $dataArray=$this->retrieveObjects($query);

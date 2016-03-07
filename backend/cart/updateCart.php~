@@ -37,10 +37,10 @@
 		//$idProduto=$_GET['addIdProduto'];
 		$produto=carregaProduto($idProduto);
 		$itemEstoque=$produto->__get('itemEstoque');
-		if($itemEstoque->__get('quantidade')>0){
+		if($itemEstoque->__get('quantidade')>0)
 			deduzEstoque($itemEstoque,-1);
 			$retorno=addProduto($produto);	
-		}else
+		else
 			$retorno='Quantidade excedida no estoque!';
 	
 	}if($action=='del'){ 

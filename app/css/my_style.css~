@@ -252,7 +252,7 @@ html,body {
 	position: relative;
 	display: block;
 	border: 1px solid white; /*#006600*/
-	padding: 10px 10px 10px 0px;
+	padding: 10px 10px 10px 10px;
 	float: left;
 }
 .menu_vertical_esquerda ul{

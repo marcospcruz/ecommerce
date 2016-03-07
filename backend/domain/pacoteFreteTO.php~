@@ -178,6 +178,7 @@ class PacoteFreteTO{
 		echo '-------> vazio: '.$vazioX.'<br>';
 		echo '-------> comprimento preenchido: '.$this->comprimentoPreenchido.'<br><br>';*/
 		if($vazioY>=$dimensoesItem[self::EIXO_Y]){
+			echo "<p>liberou y</p>";
 			return true;
 		}elseif($vazioX>=$dimensoesItem[self::EIXO_X] && $vazioZ>=$dimensoesItem[self::EIXO_Z]){
 			return true;
