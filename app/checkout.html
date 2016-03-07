@@ -20,8 +20,10 @@
 			<td>{{item.valorTotal|currency}}</td>
 		</tr>
 		<tr>
-			<td colspan="4" class='cart_grid_footer'><label class="form_frete"><span>Digite o CEP para cálculo do frete:</span><input type="text" maxlength="5" size="3" id="cep_prefixo" onkeypress="return justNumber(event);" onkeyup="autoTab(this,cep_sufixo)">-<input type="text" maxlength="3" size="1" id="cep_sufixo" name="cep_sufixo" onkeypress="return justNumber(event);"><button onclick="calculaFrete(cep_prefixo.value,cep_sufixo.value);">Calcular</button></label></td>
-			<td class='cart_grid_footer'></td>		
+			<td colspan="4" class='cart_grid_footer'><label class="form_frete"><span>Digite o CEP para cálculo do frete:</span><input type="text" maxlength="5" size="3" id="cep_prefixo" ng-model='cep.prefixo' onkeypress="return justNumber(event);" onkeyup="autoTab(this,cep_sufixo)"  required>-<input type="text" maxlength="3" size="1" id="cep_sufixo" ng-model='cep.sufixo' onkeypress="return justNumber(event);"><button ng-click="calculaFrete()" required>Calcular</button></label></td>
+			<td class='cart_grid_footer'>
+				<span ng-repeat="pacote in pacotes"><li ng-repeat="x in pacote">{{x}}</li></span>
+			</td>		
 		</tr>
 		<tr>
 			<td class='cart_grid_footer' colspan='4'>Valor Total da Compra:</td><td class='cart_grid_footer'>{{cartValorTotal|currency}}</td>				
@@ -32,4 +34,5 @@
 </div>
 
 <!--input type="text" name="cart_qt" disabled="yes" id="cart_qt" value="'.$quantidade.'" size="5"><span class="increase_qt"><a href="#" class="update_cart" onclick="addToCart('.$produto->__get('idProduto').');">+</a></span><span class="decrease_qt"><a href="#" class="update_cart" onclick="removeUmItem('.$produto->__get('idProduto').');">-</a></span-->
+
 

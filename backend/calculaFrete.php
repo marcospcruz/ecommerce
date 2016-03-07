@@ -14,13 +14,17 @@
 dimensao caixa: comprimento x largura x altura
 **/
 	//echo ' <head><meta http-equiv="refresh" content="2"></head> ';	
-	$comprimentoCaixa=100;
-	$larguraCaixa=70;
-	$alturaCaixa=40;
-	
-	$pacoteFinal=array();
-	
-	$cep_DST=$_GET['CEP_DESTINO'];
+
+	$postdata = file_get_contents("php://input");
+	$request = json_decode($postdata);
+	//die($request->cepDestino);
+	if(!isset($request)){
+		$cep_DST=$_GET['CEP_DESTINO'];
+
+	}else{
+		$cep_DST=$request->cepDestino;
+
+	}
 
 	$cartManager=new CartManager();
 	$servicoLogistica=new ServicoLogisticaServices();
@@ -40,46 +44,47 @@ dimensao caixa: comprimento x largura x altura
 	$parametros=null;
 	$empacotador=new Empacotador();
 	//empacotando os itens.
+	$json=null;
 	while($cartManager->hasItem()){	
 
 		$itemCompra=$cartManager->getItem();
 		$empacotador->empacota($itemCompra);
 	}
 	$totalPacotes=$empacotador->getTotalPacotes();
-	echo "Total de Pacotes: ".$totalPacotes.'<br>';
-	$contador=1;
+	//echo "Total de Pacotes: ".$totalPacotes.'<br>';
+	$contador=0;$x=0;
 	foreach($empacotador->__get('pacotes') as $pacote){
-		echo "<li>Pacote ".$contador++.':<ul>';
-		
-		$peso=$pacote->__get('pesoPacote');	
-		echo "<li>Peso pacote:".$peso.'</li>';
-		$comprimento=$pacote->__get('comprimentoPreenchido');	
-		echo "<li>Comprimento pacote:".$comprimento.'</li>';
-		$largura=$pacote->__get('larguraPreenchida');	
-		echo "<li>Largura pacote:".$largura.'</li>';
-		$altura=$pacote->__get('alturaPreenchida');
-		echo "<li>altura pacote:".$altura.'</li>';	
+		//echo "<li>Pacote ".$contador++.':<ul>';
 		$valorDeclarado=$pacote->__get('valorDeclarado');
+		$x+=$valorDeclarado;
+		//echo '<li>valor declarado:'.$valorDeclarado.'</li>';
+		$peso=$pacote->__get('pesoPacote');	
+		//echo "<li>Peso pacote:".$peso.'</li>';
+		$comprimento=$pacote->__get('comprimentoPreenchido');	
+		//echo "<li>Comprimento pacote:".$comprimento.'</li>';
+		$largura=$pacote->__get('larguraPreenchida');	
+		//echo "<li>Largura pacote:".$largura.'</li>';
+		$altura=$pacote->__get('alturaPreenchida');
+		//echo "<li>altura pacote:".$altura.'</li>';	
 		$diametro=sqrt((pow($altura,2)+pow($largura,2)));
-		echo "<li>Diametro:".$diametro.'</li></ul>';
+		//echo "<li>Diametro:".$diametro.'</li></ul>';
+		$key='pacote'.$contador;
+		$teste=$servicoLogistica->calculaFreteEntrega('08465312',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,$diametro,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
 		
-		$json=$servicoLogistica->calculaFreteEntrega('12210070',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,$diametro,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
-
-		
+		$contador++;
 	}
-	
 
-	
+	echo '<br><br>';
+	foreach($teste as $x){
+		echo 'tamanho de x:'.sizeof($x);
+		echo '<br>codigoServico:'.$x['codigoServico'];
+		echo '<br>descricaoServico:'.$x['descricaoServico'];
+		echo '<br>valorServico:'.$x['valorServico'];
+		echo '<br>prazoEntregaDias:'.$x['prazoEntregaDias'];
+		echo '<br><br>';
+	}
 
-//echo $parametros[0];
-//calculaFreteEntrega($cepOrigem,$cepDestino,$pesoPacote,$formatoPacote,$comprimentoPacote,$alturaPacote,$larguraPacote,$diametroPacote,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega)
-
-//	foreach($parametros as $valor){
-		//echo $valor."<br><br><br><br>";
-//	}
-
-	//$json=$servicoLogistica->calculaFreteEntrega('12231090',$cep_DST,$parametros[0],$parametros[1],$parametros[2],$parametros[3],$parametros[4],$parametros[5],'n',$parametros[6],'n');
-	echo $json;
+	//echo $x;
 /**
   *
   **/

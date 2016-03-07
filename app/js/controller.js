@@ -25,3 +25,6 @@ ecommerceControllers.controller('atualizaCarrinhoController',['$scope','$http','
 
 ecommerceControllers.controller('checkoutController',['$scope','$http',checkoutViewController]);
 
+
+/************************************************************************************************************************************/
+

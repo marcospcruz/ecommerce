@@ -61,7 +61,8 @@ class ServicoLogisticaServices{
 
 		}
 		
-		return json_encode($retorno);
+		//return json_encode($retorno);
+		return $retorno;
 
 	}	
 	
