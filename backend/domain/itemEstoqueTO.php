@@ -11,6 +11,13 @@ class ItemEstoqueTO extends AbstractClass{
 	private $largura;
 	private $altura;
 	private $comprimento;
+
+	public function getValorFinal(){
+		$valorUnit=$this->valorUnitario;
+		$desconto=$this->porcentagemDesconto;
+		return $valorUnit-(($valorUnit*$desconto)/100);	
+	}
+
 	public function __get($property) {
 	    if (property_exists($this, $property)) {
 	      return $this->$property;

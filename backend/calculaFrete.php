@@ -15,8 +15,8 @@ dimensao caixa: comprimento x largura x altura
 **/
 	//echo ' <head><meta http-equiv="refresh" content="2"></head> ';	
 	$comprimentoCaixa=100;
-	$larguraCaixa=100;
-	$alturaCaixa=100;
+	$larguraCaixa=70;
+	$alturaCaixa=40;
 	
 	$pacoteFinal=array();
 	
@@ -31,7 +31,7 @@ dimensao caixa: comprimento x largura x altura
 	$formatoPacote='1';	//formato pacote 1 para caixa / pacote e 2 para rolo/prisma.
 	$entregaSomenteParaRemetenteInformado='s';
 	$confirmacaoEntrega='s';
-	$valorDeclarado=0;
+
 
 	$itens=$cartManager->getItens();
 
@@ -50,6 +50,7 @@ dimensao caixa: comprimento x largura x altura
 	$contador=1;
 	foreach($empacotador->__get('pacotes') as $pacote){
 		echo "<li>Pacote ".$contador++.':<ul>';
+		
 		$peso=$pacote->__get('pesoPacote');	
 		echo "<li>Peso pacote:".$peso.'</li>';
 		$comprimento=$pacote->__get('comprimentoPreenchido');	
@@ -57,10 +58,14 @@ dimensao caixa: comprimento x largura x altura
 		$largura=$pacote->__get('larguraPreenchida');	
 		echo "<li>Largura pacote:".$largura.'</li>';
 		$altura=$pacote->__get('alturaPreenchida');
-		echo "<li>altura pacote:".$altura.'</li></ul>';	
+		echo "<li>altura pacote:".$altura.'</li>';	
+		$valorDeclarado=$pacote->__get('valorDeclarado');
+		$diametro=sqrt((pow($altura,2)+pow($largura,2)));
+		echo "<li>Diametro:".$diametro.'</li></ul>';
+		
+		$json=$servicoLogistica->calculaFreteEntrega('12210070',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,$diametro,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
 
-
-		$servicoLogistica->calculaFreteEntrega('12200000',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,($comprimento*$altura*$largura),$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
+		
 	}
 	
 
@@ -83,9 +88,9 @@ class Empacotador{
 	/*private $altura;
 	private $comprimento;
 	private $largura;*/
-	const ALTURA_CAIXA=100;
+	const ALTURA_CAIXA=40;
 	const COMPRIMENTO_CAIXA=100;
-	const LARGURA_CAIXA=100;
+	const LARGURA_CAIXA=60;
 	const MATRIX_BASE=4;
 	
 	private $pacotes;
@@ -152,6 +157,7 @@ class Empacotador{
 		$dimensaoItem[2]=$itemEstoque->__get("largura");
 		
 		$pesoItem=$itemEstoque->__get("peso");
+		$valorFinalItem=$itemEstoque->getValorFinal();
 
 		$indicePacote=0;
 		$item=1;
@@ -161,7 +167,7 @@ class Empacotador{
 			$this->getPacoteFrete($dimensaoItem);	
 			$indicePacote=$this->indicePacote;
 
-			$this->pacotes[$indicePacote]->addItem($dimensaoItem,$pesoItem);
+			$this->pacotes[$indicePacote]->addItem($dimensaoItem,$pesoItem,$valorFinalItem);
 			//echo 'Pacote'.($indicePacote+1).'-item'.$item.'<br>';
 			
 			$item++;

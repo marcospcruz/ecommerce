@@ -12,6 +12,7 @@ class PacoteFreteTO{
 	private $comprimentoPreenchido;
 	private $larguraPreenchida;
 	private $pesoPacote;
+	private $valorDeclarado;
 
 	private $totalmentePreenchido;
 
@@ -38,6 +39,7 @@ class PacoteFreteTO{
 		$this->x=0;
 		$this->y=0;
 		$this->z=0;
+		$this->valorDeclarado=0;
 		//altura,comprimento,largura
 
 		
@@ -56,8 +58,8 @@ class PacoteFreteTO{
 	  return $this;
 	}
 
-	public function addItem($dimensaoItem,$pesoItem){
-
+	public function addItem($dimensaoItem,$pesoItem,$valorFinalProduto){
+		$this->valorDeclarado+=$valorFinalProduto;
 		$this->pesoPacote+=$pesoItem;
 	
 		if(!isset($this->pacote[0][0])){
