@@ -15,18 +15,29 @@
 			<td>{{item.produto}}</td>
 			<td ><span style="display: inline-block;width: 100px;text-align:center;">{{item.quantidade}}</span><span class="increase_qt"><a href="#/loja/add/{{item.idProduto}}/cart" class="update_cart" ng-hide="hideLinkAdd=(item.saldoEstoque==0);">+</a></span>
 <span class="decrease_qt"><a href="#/loja/del/{{item.idProduto}}/cart" class="update_cart">-</a></span></td>
-			<td >{{item.valorUnitario|currency}}</td>
+			<td>{{item.valorUnitario|currency}}</td>
 			<td>{{item.desconto}}</td>
 			<td>{{item.valorTotal|currency}}</td>
 		</tr>
 		<tr>
-			<td colspan="4" class='cart_grid_footer'><label class="form_frete"><span>Digite o CEP para cálculo do frete:</span><input type="text" maxlength="5" size="3" id="cep_prefixo" ng-model='cep.prefixo' onkeypress="return justNumber(event);" onkeyup="autoTab(this,cep_sufixo)"  required>-<input type="text" maxlength="3" size="1" id="cep_sufixo" ng-model='cep.sufixo' onkeypress="return justNumber(event);"><button ng-click="calculaFrete()" required>Calcular</button></label></td>
-			<td class='cart_grid_footer'>
-				<span ng-repeat="pacote in pacotes"><li ng-repeat="x in pacote">{{x}}</li></span>
+			<td colspan="4" <label class="form_frete"><span>Digite o CEP para cálculo do frete:</span><input type="text" maxlength="5" size="3" id="cep_prefixo" ng-model='cep.prefixo' onkeypress="return justNumber(event);" onkeyup="autoTab(this,cep_sufixo)"  required>-<input type="text" maxlength="3" size="1" id="cep_sufixo" ng-model='cep.sufixo' onkeypress="return justNumber(event);"><button ng-click="teste();" >Calcular</button></label></td>
+			<td >
+				<span ng-repeat="servicos in frete">
+					<span ng-repeat="servico in servicos">
+						{{servico.descricaoServico}}:<br>
+						{{servico.valorServico|currency}}<br>
+					</span>
+					
+				</span>
 			</td>		
 		</tr>
 		<tr>
-			<td class='cart_grid_footer' colspan='4'>Valor Total da Compra:</td><td class='cart_grid_footer'>{{cartValorTotal|currency}}</td>				
+			<td class='cart_grid_footer' colspan='4'>
+				Valor Total da Compra:
+			</td>
+			<td class='cart_grid_footer'>
+				<span id="vlTotalCompra">{{cartValorTotal|currency}}</span>
+			</td>				
 		</tr>
 		
 	</table>

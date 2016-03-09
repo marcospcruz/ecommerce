@@ -69,22 +69,12 @@ dimensao caixa: comprimento x largura x altura
 		$diametro=sqrt((pow($altura,2)+pow($largura,2)));
 		//echo "<li>Diametro:".$diametro.'</li></ul>';
 		$key='pacote'.$contador;
-		$teste=$servicoLogistica->calculaFreteEntrega('08465312',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,$diametro,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
+		$json[$contador]=$servicoLogistica->calculaFreteEntrega('08465312',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,$diametro,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
 		
 		$contador++;
 	}
 
-	echo '<br><br>';
-	foreach($teste as $x){
-		echo 'tamanho de x:'.sizeof($x);
-		echo '<br>codigoServico:'.$x['codigoServico'];
-		echo '<br>descricaoServico:'.$x['descricaoServico'];
-		echo '<br>valorServico:'.$x['valorServico'];
-		echo '<br>prazoEntregaDias:'.$x['prazoEntregaDias'];
-		echo '<br><br>';
-	}
-
-	//echo $x;
+	echo json_encode($json);
 /**
   *
   **/

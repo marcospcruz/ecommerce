@@ -7,8 +7,8 @@
 //Especificações 	Mínimo 	Máximo	
 //Comprimento (C) 	16 cm 	105 cm	
 //Largura (L)		11 cm 	105 cm	
-//Altura (A) 	2 cm 	105 cm	
-//Soma (C+L+A) 	29 cm 	200 cm	
+//Altura (A) 		2 cm 	105 cm	
+//Soma (C+L+A) 		29 cm 	200 cm	
 //
 //A soma resultante do comprimento + largura + altura não deve superar 200 cm.
 class ServicoLogisticaServices{
@@ -40,16 +40,23 @@ class ServicoLogisticaServices{
 
 			foreach($dadosServico->cServico as $linhas) {
 				if($linhas->Erro == 0) {
+
 					$descricaoServico=$this->extraiDescricaoServico($linhas->Codigo,$integrador->__get($this->attr));
-					//echo "Código:".$linhas->Codigo.'</br>';
+					$codigo=$linhas->Codigo*1;
+					$valor=str_replace(',','.',(string)$linhas->Valor);
+					$prazoEntrega=$linhas->PrazoEntrega*1;	
+					//echo $valor.'<br>';				
+					//echo "Código:".$codigo.'</br>';
 					//echo "Serviço:".$descricaoServico.'</br>';
 					//echo "Valor:".$linhas->Valor .'</br>';
-					//echo "Prazo Entrega:".$linhas->PrazoEntrega.' Dias </br>';
+					//echo "Prazo Entrega:".$prazoEntrega.' Dias </br>';
 					
-					$retorno[sizeof($retorno)]=array('codigoServico'=>$linhas->Codigo);
-					$retorno[sizeof($retorno)]=array('descricaoServico'=>$descricaoServico);	
-					$retorno[sizeof($retorno)]=array('valorServico'=>$linhas->Valor);
-					$retorno[sizeof($retorno)]=array('prazoEntregaDias'=>$linhas->PrazoEntrega);
+					$retorno[sizeof($retorno)]=array(
+						'codigoServico'=>$codigo,
+						'descricaoServico'=>$descricaoServico,
+						'valorServico'=>$valor,
+						'prazoEntregaDias'=>$prazoEntrega
+					);
 
 				}else {
 					echo $linhas->MsgErro."<br>";
@@ -139,6 +146,7 @@ class ServicoLogisticaServices{
 	}
 
 	private function extraiDescricaoServico($codigoServico,$servicos){
+;
 		foreach($servicos as $servico){
 			if($servico->__get("codigoServico")==$codigoServico){
 				return $servico->__get("descricaoServico");

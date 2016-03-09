@@ -67,6 +67,5 @@ CREATE EVENT LIMPA_TEMP_CART_JOB
       CALL LIMPA_TEMP_CART;
 
 /**
-  * SELECT event_schema,event_name,interval_value,interval_field,definer,event_definition,EVENT_TYPE,last_executed  FROM
-  * INFORMATION_SCHEMA.EVENTS;
+  * SELECT event_schema,event_name,interval_value,interval_field,definer,event_definition,EVENT_TYPE,last_executed  FROM INFORMATION_SCHEMA.EVENTS;
   **/

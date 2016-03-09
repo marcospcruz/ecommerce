@@ -15,3 +15,27 @@ ecommerceApp.config(['$routeProvider',
 			otherwise({redirectTo:'/loja'});
 	}
 ]);
+
+
+
+ecommerceApp.factory('svc',function(){
+	var msg="original...";
+	var array=null;
+	return {
+			getArray:function(){
+				return array;			
+			},
+			setMessage:function(x){
+				msg=x;
+			},	
+			getMessage:function(x){
+
+				return msg;	
+			},
+			calculaFrete:calcula
+
+		};
+	
+});
+
+

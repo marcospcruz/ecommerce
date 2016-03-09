@@ -23,7 +23,7 @@ ecommerceControllers.controller('vitrineController',['$scope','$http','$routePar
 
 ecommerceControllers.controller('atualizaCarrinhoController',['$scope','$http','$routeParams','$location',updateCartFunction]);
 
-ecommerceControllers.controller('checkoutController',['$scope','$http',checkoutViewController]);
+ecommerceControllers.controller('checkoutController',['$scope','$http','svc',checkoutViewController]);
 
 
 /************************************************************************************************************************************/

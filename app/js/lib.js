@@ -49,7 +49,8 @@ var loadVitrine=function($scope,$http,$routeParams){
 /**
   *
   **/
-var checkoutViewController=function($scope,$http){
+var checkoutViewController=function($scope,$http,svc){
+	
 	var path=url+'cart/checkoutBuilder.php';
 	console.log('checkoutViewController ajax para '+path);
 	$http.get(path).then(function(response){
@@ -60,10 +61,16 @@ var checkoutViewController=function($scope,$http){
 		
 	},function(response){console.log('erro:'+JSON.stringify(response));});
 
-	$scope.calculaFrete=function(){
+	$scope.teste=function(){
+		svc.calculaFrete($scope,$http);
+	};
+
+};
+var calcula=function($scope,$http){
 		var valorCep=$scope.cep.prefixo+$scope.cep.sufixo;
 		var data=JSON.stringify({cepDestino:valorCep});
 		var path=url+'calculaFrete.php';
+
 		console.log('calculaFrete: ajax para '+path);
 
 		$http({
@@ -72,20 +79,51 @@ var checkoutViewController=function($scope,$http){
 			data: 	data,			
 			headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
 		}).then(function(response){
-			console.log(JSON.stringify(response.data));
-			$scope.pacotes=response.data;
+			
+			var json=response.data;
+			$scope.frete=json;
+			
+			var simboloMoeda=document.getElementById("vlTotalCompra").innerHTML.substring(0,2);
+			console.log(simboloMoeda);
+			var valorTotalCompra=parseFloat(document.getElementById("vlTotalCompra").innerHTML.substring(2).replace(',','.'));
+			console.log('-->'+valorTotalCompra);
+	
+			for(var i=0;i<json.length;i++){
+				//console.log(i);
+				var row=json[i];
+				for(var j=0;j<row.length;j++){
+					var obj=row[j];
+					//console.log(obj['descricaoServico']);
+					valorTotalCompra+=parseFloat(obj['valorServico']);
+				}
+
+			}
+			var valorTotalString=String(valorTotalCompra.toFixed(2));
+			//adicionando casas de centavos ao valor inteiro.
+			//if((valorTotalCompra%1)==0){
+			//	valorTotalString+='.00';
+			//}
+			document.getElementById("vlTotalCompra").innerHTML=simboloMoeda+valorTotalString.replace('.',',');
 
 		},function(response){
 			
-			alert('Erro:'+JSON.stringify(response));
+			console.log('Erro:'+JSON.stringify(response));
 	
 		});
-		
 
-	}
+		//console.log($scope.servicos);
 
-};
+	};
 
+
+/*angular.module('myServicesFactory',[])
+	.factory('myServices',function(){
+	alert('x');
+	var service;
+	service.funcao=[];
+	service.funcao.calculaFrete=calculaFrete;
+	return service;
+});*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function justNumber(e){

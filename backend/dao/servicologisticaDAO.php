@@ -4,7 +4,7 @@ class ServicoLogisticaDAO{
 	private $SQL_SELECT="select * from servicologistica";
 
 	public function readServicosIntegrador($idIntegradorLogistica){
-		$SQL=$this->SQL_SELECT." where idIntegradorLogistica=".$idIntegradorLogistica;
+		$SQL=$this->SQL_SELECT." where idIntegradorLogistica=".$idIntegradorLogistica." and ativo=true";
 		$query=mysql_query($SQL);
 		$dataArray=array();
   	        $dataArray=$this->retrieveObjects($query);	
