@@ -2,11 +2,11 @@ var urlCartAction='../backend/cart/updateCart.php';
 /**
   *
   **/
-var updateCartFunction=function($scope,$http,$routeParams,$location){
+var updateCartFunction=function($scope,$http,$routeParams,$location,svc){
 	console.log('- adicionando item no carrinho.');
 	console.log('routeparams:'+JSON.stringify($routeParams));
 	var data=JSON.stringify({idProduto:$routeParams.idProduto,action:$routeParams.action});
-		console.log('data:'+JSON.stringify($routeParams));
+
 	$http({
 		method: 'POST',
 		url:	urlCartAction,
@@ -16,7 +16,7 @@ var updateCartFunction=function($scope,$http,$routeParams,$location){
 		console.log(JSON.stringify(response.data));
 		document.getElementById('cart_qt').innerHTML=response.data;
 		//alert(document.getElementById('cart_qt').innerHTML);
-		
+		console.log('cep:'+$scope.cep);
 
 	},function(response){
 		console.log('erro em addCartFunction:'+JSON.stringify(response));
@@ -62,15 +62,15 @@ var checkoutViewController=function($scope,$http,svc){
 	},function(response){console.log('erro:'+JSON.stringify(response));});
 
 	$scope.teste=function(){
-		svc.calculaFrete($scope,$http);
+		svc.calculaFrete($scope,$http,svc);
 	};
 
+
 };
-var calcula=function($scope,$http){
+var calcula=function($scope,$http,svc){
 		var valorCep=$scope.cep.prefixo+$scope.cep.sufixo;
 		var data=JSON.stringify({cepDestino:valorCep});
 		var path=url+'calculaFrete.php';
-
 		console.log('calculaFrete: ajax para '+path);
 
 		$http({
@@ -80,16 +80,17 @@ var calcula=function($scope,$http){
 			headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
 		}).then(function(response){
 			
-			var json=response.data;
+			var json=response.data[1];
+			console.log(JSON.stringify(response.data));
 			$scope.frete=json;
 			
 			var simboloMoeda=document.getElementById("vlTotalCompra").innerHTML.substring(0,2);
 			console.log(simboloMoeda);
-			var valorTotalCompra=parseFloat(document.getElementById("vlTotalCompra").innerHTML.substring(2).replace(',','.'));
-			console.log('-->'+valorTotalCompra);
-	
+			var valorTotalCompra=response.data[0].valorTotalCarrinho;
+//parseFloat(document.getElementById("vlTotalCompra").innerHTML.substring(2).replace(',','.'));
+			
 			for(var i=0;i<json.length;i++){
-				//console.log(i);
+				console.log(i);
 				var row=json[i];
 				for(var j=0;j<row.length;j++){
 					var obj=row[j];

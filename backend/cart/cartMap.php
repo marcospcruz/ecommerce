@@ -158,5 +158,22 @@ class CartMap {
 		
 		}
 	}
+	/**
+	  *
+	  **/
+	public function getValorTotalItens(){
+		$i=0;
+		$valorTotal=0;
+		while($i<sizeof($this->keys)){
+			$produto=$this->keys[$i];
+			$itemEstoque=$produto->__get('itemEstoque');
+			$valorItem=$itemEstoque->getValorFinal();				
+			$quantidade=$this->values[$i];
+			$valorTotal+=$quantidade*$valorItem;
+			$i++;
+		}
+		return $valorTotal;		
+	}
+
 }
 ?>

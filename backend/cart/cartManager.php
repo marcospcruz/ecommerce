@@ -67,7 +67,6 @@ class CartManager{
 	  **/
 	public function getTotalItens(){
 		$this->initCart();
-		
 		return $this->cart->totalItens();	
 	}
 	/**
@@ -97,9 +96,17 @@ class CartManager{
 	public function getItens(){
 		return $this->cart->getKeys();	
 	}
-	
+	/**
+	  *
+	  **/	
 	public function getSessionId(){
 		return session_id();
+	}
+	/**
+	  *
+	  **/
+	public function getValorTotalCart(){
+		return $this->cart->getValorTotalItens();
 	}	
 }
 ?>

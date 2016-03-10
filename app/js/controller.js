@@ -21,7 +21,7 @@ ecommerceControllers.controller('ecommerceLayoutCntrl',['$scope','$http',functio
 
 ecommerceControllers.controller('vitrineController',['$scope','$http','$routeParams',loadVitrine]);
 
-ecommerceControllers.controller('atualizaCarrinhoController',['$scope','$http','$routeParams','$location',updateCartFunction]);
+ecommerceControllers.controller('atualizaCarrinhoController',['$scope','$http','$routeParams','$location','svc',updateCartFunction]);
 
 ecommerceControllers.controller('checkoutController',['$scope','$http','svc',checkoutViewController]);
 

@@ -20,8 +20,20 @@ ecommerceApp.config(['$routeProvider',
 
 ecommerceApp.factory('svc',function(){
 	var msg="original...";
-	var array=null;
+	var objeto=[];
 	return {
+			addElementAttribute:function(attrib,value){
+				objeto={attrib:value};
+			},
+			dellElementAttribute:function(attrib){
+				delete objeto.attrib;			
+			},
+			getElementAttribValue:function(attrib){
+				return objeto.attrib;	
+			},
+			getElement:function(){
+				return objeto;			
+			},
 			getArray:function(){
 				return array;			
 			},

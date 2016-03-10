@@ -27,6 +27,7 @@ dimensao caixa: comprimento x largura x altura
 	}
 
 	$cartManager=new CartManager();
+
 	$servicoLogistica=new ServicoLogisticaServices();
 	$utilitario=new Utilitario();	
 	$totalItens=$cartManager->getTotalItens();
@@ -44,7 +45,8 @@ dimensao caixa: comprimento x largura x altura
 	$parametros=null;
 	$empacotador=new Empacotador();
 	//empacotando os itens.
-	$json=null;
+	$json[0]=array('valorTotalCarrinho'=>$cartManager->getValorTotalCart());
+
 	while($cartManager->hasItem()){	
 
 		$itemCompra=$cartManager->getItem();
@@ -52,7 +54,9 @@ dimensao caixa: comprimento x largura x altura
 	}
 	$totalPacotes=$empacotador->getTotalPacotes();
 	//echo "Total de Pacotes: ".$totalPacotes.'<br>';
-	$contador=0;$x=0;
+	$contador=0;
+	$json[1]=array();
+	$x=0;
 	foreach($empacotador->__get('pacotes') as $pacote){
 		//echo "<li>Pacote ".$contador++.':<ul>';
 		$valorDeclarado=$pacote->__get('valorDeclarado');
@@ -69,8 +73,8 @@ dimensao caixa: comprimento x largura x altura
 		$diametro=sqrt((pow($altura,2)+pow($largura,2)));
 		//echo "<li>Diametro:".$diametro.'</li></ul>';
 		$key='pacote'.$contador;
-		$json[$contador]=$servicoLogistica->calculaFreteEntrega('08465312',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,$diametro,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
-		
+		$json[1][$contador]=$servicoLogistica->calculaFreteEntrega('08465312',$cep_DST,$peso,$formatoPacote,$comprimento,$altura,$largura,$diametro,$entregaSomenteParaRemetenteInformado,$valorDeclarado,$confirmacaoEntrega);
+		//echo '<br>';
 		$contador++;
 	}
 
