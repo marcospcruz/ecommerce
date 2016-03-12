@@ -20,22 +20,23 @@ ecommerceApp.config(['$routeProvider',
 
 ecommerceApp.factory('svc',function(){
 	var msg="original...";
-	var objeto=[];
+	var objeto={};
 	return {
-			addElementAttribute:function(attrib,value){
-				objeto={attrib:value};
+			addObjetoAttribValue:function(attrib,value){
+				//objeto={attrib:value};
+				objeto[attrib]=value;
 			},
 			dellElementAttribute:function(attrib){
 				delete objeto.attrib;			
 			},
-			getElementAttribValue:function(attrib){
-				return objeto.attrib;	
+			getObjetoAttribValue:function(attrib){
+				return objeto[attrib];	
 			},
-			getElement:function(){
+			getObjeto:function(){
 				return objeto;			
 			},
-			getArray:function(){
-				return array;			
+			setObjeto:function(x){
+				objeto=x;			
 			},
 			setMessage:function(x){
 				msg=x;
