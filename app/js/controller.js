@@ -6,8 +6,9 @@ var url="../backend/";
 
 var ecommerceControllers=angular.module('ecommerceControllers',[]);
 
-ecommerceControllers.controller('ecommerceLayoutCntrl',['$scope','$http',function($scope,$http){
-	
+ecommerceControllers.controller('ecommerceLayoutCntrl',['$scope','$http','svc',function($scope,$http,svc){
+	$scope.method=[];
+
 	$http.get(url+"action/startupAction.php").then(function(response){
 		console.log('ecommerceLayoutCNtrl: '+JSON.stringify(response));
 		$scope.totalItensCarrinho=response.data[0].totalItensCarrinho;

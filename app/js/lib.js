@@ -9,7 +9,7 @@ var updateCartFunction=function($scope,$http,$routeParams,$location,svc){
 	var pausaInMs=0;
 	var cep_Destino=svc.getObjetoAttribValue('cep_destino');
 	$scope.cep=cep_Destino;
-																																																																																																																																																			
+
 	$http({
 		method: 'POST',
 		url:	urlCartAction,
@@ -29,6 +29,9 @@ var updateCartFunction=function($scope,$http,$routeParams,$location,svc){
 		document.getElementById("cep_sufixo").value=cep_Destino.sufixo;
 		
 		svc.calculaFrete($scope,$http,svc);
+		$scope.method.calculaFrete=function(){
+			svc.calculaFrete($scope,$http,svc);
+		};
 
 	},function(response){
 		console.log('erro em addCartFunction:'+JSON.stringify(response));
@@ -72,10 +75,10 @@ var checkoutViewController=function($scope,$http,svc){
 		
 	},function(response){console.log('erro:'+JSON.stringify(response));});
 
-	$scope.teste=function(){
+	
+	$scope.method.calculaFrete=function(){
 		svc.calculaFrete($scope,$http,svc);
 	};
-
 
 };
 var calcula=function($scope,$http,svc){
