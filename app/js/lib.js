@@ -6,7 +6,10 @@ var updateCartFunction=function($scope,$http,$routeParams,$location,svc){
 	console.log('- adicionando item no carrinho.');
 	//console.log('routeparams:'+JSON.stringify($routeParams));
 	var data=JSON.stringify({idProduto:$routeParams.idProduto,action:$routeParams.action});
-	$scope.cep=svc.getObjetoAttribValue('cep_destino');																																																																																																																																																				
+	var pausaInMs=0;
+	var cep_Destino=svc.getObjetoAttribValue('cep_destino');
+	$scope.cep=cep_Destino;
+																																																																																																																																																			
 	$http({
 		method: 'POST',
 		url:	urlCartAction,
@@ -18,6 +21,13 @@ var updateCartFunction=function($scope,$http,$routeParams,$location,svc){
 		//console.log('cep:');
 		//console.log($scope.cep);
 		//console.log('recalcular frete:');
+
+		//$timeout(function(){
+			//document.getElementById("cep_prefixo").value='Marcos';
+		//},pausaInMs);
+		document.getElementById("cep_prefixo").value=cep_Destino.prefixo;
+		document.getElementById("cep_sufixo").value=cep_Destino.sufixo;
+		
 		svc.calculaFrete($scope,$http,svc);
 
 	},function(response){
