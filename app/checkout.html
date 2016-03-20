@@ -22,12 +22,14 @@
 		<tr class='cart_grid_footer'>
 			<td colspan="4" <label class="form_frete"><span>Digite o CEP para cálculo do frete:</span><input type="text" maxlength="5" size="3" id="cep_prefixo" ng-model='cep.prefixo' ng-init="cep.prefixo=getCep();" onkeypress="return justNumber(event);" onkeyup="autoTab(this,cep_sufixo)"  required>-<input type="text" maxlength="3" size="1" id="cep_sufixo" ng-model='cep.sufixo' onkeypress="return justNumber(event);"><button ng-click="method.calculaFrete();" >Calcular</button></label></td>
 			<td >
-				<span ng-repeat="servicos in frete">
-					<span ng-repeat="servico in servicos track by $index" >
-						{{servico.descricaoServico}} pacote {{ $parent.$index + 1 }}: <br>
-						{{servico.valorServico|currency}}<br><br>
+				<span id="frete_pkg">
+					<span ng-repeat="servicos in frete">
+						<span ng-repeat="servico in servicos track by $index" >
+							{{servico.descricaoServico}} pacote {{ $parent.$index + 1 }}: <br>
+							{{servico.valorServico|currency}}<br><br>
+						</span>
+						
 					</span>
-					
 				</span>
 			</td>		
 		</tr>

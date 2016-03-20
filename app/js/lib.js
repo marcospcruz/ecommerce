@@ -2,11 +2,11 @@ var urlCartAction='../backend/cart/updateCart.php';
 /**
   *
   **/
-var updateCartFunction=function($scope,$http,$routeParams,$location,svc){
+var updateCartFunction=function($scope,$http,$routeParams,$location,svc,$timeout){
 	console.log('- adicionando item no carrinho.');
 	//console.log('routeparams:'+JSON.stringify($routeParams));
 	var data=JSON.stringify({idProduto:$routeParams.idProduto,action:$routeParams.action});
-	var pausaInMs=0;
+	var pausaInMs=250;
 	var cep_Destino=svc.getObjetoAttribValue('cep_destino');
 	$scope.cep=cep_Destino;
 
@@ -22,13 +22,17 @@ var updateCartFunction=function($scope,$http,$routeParams,$location,svc){
 		//console.log($scope.cep);
 		//console.log('recalcular frete:');
 
-		//$timeout(function(){
-			//document.getElementById("cep_prefixo").value='Marcos';
-		//},pausaInMs);
 		document.getElementById("cep_prefixo").value=cep_Destino.prefixo;
 		document.getElementById("cep_sufixo").value=cep_Destino.sufixo;
 		
 		svc.calculaFrete($scope,$http,svc);
+	
+
+		$timeout(function(){
+			//alert(JSON.stringify(svc.getObjetoAttribValue('frete_carrinho')));
+			//$scope.frete
+			document.getElementById("frete_pkg").innerHTML=jsonToHtml(svc.getObjetoAttribValue('frete_carrinho'));
+		},pausaInMs);
 		$scope.method.calculaFrete=function(){
 			svc.calculaFrete($scope,$http,svc);
 		};
@@ -102,12 +106,13 @@ var calcula=function($scope,$http,svc){
 		var json=response.data[1];
 
 		
-		//$scope.frete=json;
+		$scope.frete=json;
 		svc.addObjetoAttribValue('frete_carrinho',json);
-		$scope.frete=svc.getObjetoAttribValue('frete_carrinho');
+		//$scope.frete=svc.getObjetoAttribValue('frete_carrinho');
 		var simboloMoeda=document.getElementById("vlTotalCompra").innerHTML.substring(0,2);
 		console.log(simboloMoeda);
 		valorTotalCompra=response.data[0].valorTotalCarrinho;
+
 //parseFloat(document.getElementById("vlTotalCompra").innerHTML.substring(2).replace(',','.'));
 		
 		for(var i=0;i<json.length;i++){
@@ -120,12 +125,16 @@ var calcula=function($scope,$http,svc){
 			}
 
 		}
-		var valorTotalString=String(valorTotalCompra.toFixed(2));
+
+		var valorTotalString=formatMilhar(valorTotalCompra.toFixed(2));
+
+//String(valorTotalCompra.toFixed(2));
+
 		//adicionando casas de centavos ao valor inteiro.
 		//if((valorTotalCompra%1)==0){
 		//	valorTotalString+='.00';
 		//}
-		document.getElementById("vlTotalCompra").innerHTML=simboloMoeda+valorTotalString.replace('.',',');
+		document.getElementById("vlTotalCompra").innerHTML=simboloMoeda+valorTotalString;
 
 	},function(response){
 		
@@ -161,4 +170,30 @@ function autoTab(from,to){
 	if(from.getAttribute("maxLength")==from.value.length){
 		to.focus();
 	}
+}
+
+function formatMilhar(int){
+	var tmp = (int*100).toFixed(2)+'';
+	tmp=tmp.substring(0,tmp.indexOf('.'));
+        tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+        if( tmp.length > 6 )
+                tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+        return tmp;
+
+}
+
+function jsonToHtml(json){
+	var html='<span>'
+	for(var i=0;i<json.length;i++){
+		var obj=json[i];	
+		for(var j=0;j<obj.length;j++){
+			var jsonObj=obj[j];
+			console.log(jsonObj);
+			html+=jsonObj['descricaoServico']+' pacote '+(j+1)+'<br>';
+			html+=jsonObj['valorServico']+'<br><br>';
+
+		}
+	}
+	html+='<span>';
+	return html;
 }
