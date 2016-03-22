@@ -1,5 +1,5 @@
 <?php
-include("../domain/produtoTO.php");
+@include("../domain/produtoTO.php");
 class CartMap {
 
 	private $keys;
